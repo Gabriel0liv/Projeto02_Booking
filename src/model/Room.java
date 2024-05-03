@@ -35,5 +35,22 @@ public class Room {
     public float getPrice() {
         return preco;
     }
+    
+    //setters
+    public void setId(int nid){
+        id = nid;
+    }
+    public void setRoomNumber(int nRoom){
+        numeroQuarto = nRoom;
+    }
+    public void setAdultsCapacity(int nAdultos){
+        capacidadeAdultos = nAdultos;
+    }
+    public void setChildrenCapacity(int nCrianca){
+        capacidadeCriancas = nCrianca;
+    }
+    public void setPrice(float nPreco){
+        preco = nPreco;
+    }
 }
 

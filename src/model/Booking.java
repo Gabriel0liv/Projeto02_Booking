@@ -63,4 +63,8 @@ public class Booking {
     public int getStatusId() {
         return idStatus;
     }
+    
+    public void setStatusId(int status){
+        idStatus = status;
+    }
 }
