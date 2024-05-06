@@ -172,7 +172,7 @@ public class RoomList extends javax.swing.JFrame {
     }
 
     private void carregarQuartos() {
-        // Supondo que você já tenha um método para ler e preencher a tabela
+        //método para ler e preencher a tabela
         List<Room> rooms = lerQuartosCSV("dados/rooms.csv");
         allRooms = rooms;
         DefaultTableModel model = (DefaultTableModel) tbl_rooms.getModel();

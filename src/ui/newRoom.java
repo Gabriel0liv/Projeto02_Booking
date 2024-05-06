@@ -23,6 +23,7 @@ public class newRoom extends javax.swing.JFrame {
     // recebe um quarto para editar
     public newRoom(Room quartos) {
         initComponents();
+        
         lbl_titulo.setText("Quarto nº" + String.valueOf(quartos.getRoomNumber()));
         room = quartos; // Carrega o quarto para edição
         // Preencher os campos com os dados do quarto
@@ -32,6 +33,7 @@ public class newRoom extends javax.swing.JFrame {
         txt_preco.setText(String.valueOf(quartos.getPrice()));
     }
 
+    // adicionar um ID de quarto novo
     private void appendRoomToFile(Room room) throws IOException {
         room.setId(id + 1); // Incrementa o máximo ID encontrado
         try (PrintWriter out = new PrintWriter(new FileWriter("dados/rooms.csv", true))) {
@@ -40,6 +42,7 @@ public class newRoom extends javax.swing.JFrame {
         }
     }
 
+    // le o ficheiro CSV e adiciona o novo quarto
     private void updateRoomsFile() throws IOException {
         List<Room> rooms = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File("dados/rooms.csv"))) {
@@ -56,6 +59,7 @@ public class newRoom extends javax.swing.JFrame {
                 rooms.add(r);
             }
         }
+        
         // pega a lista criada anteriormente para comparar com a lista que será gerada pelo CSV
         // e reescreve o CSV
         try (PrintWriter out = new PrintWriter(new FileWriter("dados/rooms.csv"))) {
@@ -213,17 +217,17 @@ public class newRoom extends javax.swing.JFrame {
 
             if (room == null) { // Criação de novo quarto
                 room = new Room(id + 1, roomNumber, adults, children, price);
-                appendRoomToFile(room);
+                appendRoomToFile(room); //adiciona o quarto criado no ficheiro
             } else { // Atualização de quarto existente
                 room.setId(id + 1);
                 room.setRoomNumber(roomNumber);
                 room.setAdultsCapacity(adults);
                 room.setChildrenCapacity(children);
                 room.setPrice(price);
-                updateRoomsFile();
+                updateRoomsFile(); // atualiza o ficheiro csv
             }
             JOptionPane.showMessageDialog(this, "Quarto salvo com sucesso!");
-            new RoomList().display();
+            new RoomList().display(); // volta para a lista de quartos
             dispose();
 
         } catch (NumberFormatException e) {
@@ -233,18 +237,21 @@ public class newRoom extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_salvarActionPerformed
 
+    // VOLTA PRO HOME
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         // TODO add your handling code here:
         new HomeFrame().display();
         dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
+    // VOLTA PRA LISTA DE QUARTO CANCELANDO O FORM
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:
         new RoomList().display();
         dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
+    // VAI PARA A PAGINA DE RESERVA
     private void btnBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookingActionPerformed
         // TODO add your handling code here:
         new BookingList().display();

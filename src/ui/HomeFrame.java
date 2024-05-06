@@ -25,7 +25,7 @@ public class HomeFrame extends javax.swing.JFrame {
     public HomeFrame() {
 
         initComponents();
-        loadDailyReservations();
+        loadDailyReservations(); // carrega os check-in e check-out diários
 
     }
 
@@ -192,16 +192,18 @@ public class HomeFrame extends javax.swing.JFrame {
             }
         }
 
-        populateTable(tbl_checkin, checkinToday, true);
-        populateTable(tbl_checkout, checkoutToday, false);
+        // preencher as tabelas
+        populateTable(tbl_checkin, checkinToday, true); // tabela de check-in
+        populateTable(tbl_checkout, checkoutToday, false); // tabela de check-out
     }
 
     public void updateTables() {
-        filterReservations();
+        filterReservations(); // filtra as reservas
         populateTable(tbl_checkin, checkinToday, true);
         populateTable(tbl_checkout, checkoutToday, false);
     }
 
+    // FILTRAR AS RESERVAS por dia e estado
     private void filterReservations() {
         List<Booking> allBookings = BookingList.lerBookingCSV("dados/booking.csv");
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -222,6 +224,7 @@ public class HomeFrame extends javax.swing.JFrame {
         }
     }
 
+    // PREENCHE AS TABELAS
     private void populateTable(JTable table, List<Booking> bookings, boolean isCheckIn) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0); // Limpa a tabela antes de adicionar novos dados
@@ -250,6 +253,7 @@ public class HomeFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_bookBtnActionPerformed
 
+    // PASSA PARA CHECK-IN 
     private void btn_chkinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chkinActionPerformed
         // TODO add your handling code here:
         int selectedRow = tbl_checkin.getSelectedRow();
@@ -265,6 +269,7 @@ public class HomeFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_chkinActionPerformed
 
+    // PASSA PARA CHECK-OUT 
     private void btn_chkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chkoutActionPerformed
         // TODO add your handling code here:
         int selectedRow = tbl_checkout.getSelectedRow();
@@ -280,10 +285,9 @@ public class HomeFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_chkoutActionPerformed
 
+    // INICIALIZA O PROGRAMA COM O HOME
     public static void main(String args[]) {
-
         new HomeFrame().display();
-
     }
 
     public void display() {

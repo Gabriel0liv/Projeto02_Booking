@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package ui;
 
 import java.util.*;
@@ -36,6 +33,7 @@ public class newBooking extends javax.swing.JFrame {
         initComponents();
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
+        // preenche o formulário
         txt_nome.setText(dados.getGuestFirstName());
         txt_sobrenome.setText(dados.getGuestLastName());
         txt_checkin.setText(df.format(dados.getCheckInDate()));
@@ -46,6 +44,7 @@ public class newBooking extends javax.swing.JFrame {
         btn_availableRoom.setVisible(false);
         btn_confirm.setVisible(false);
 
+        // controle dos botoes de checkin/checkoout e cancelar
         if (dados.getStatusId() == 2) { // Supondo que 2 seja o ID para "Checked-in"
             btn_ckin.setEnabled(false);
             btn_ckout.setEnabled(true);
@@ -68,7 +67,7 @@ public class newBooking extends javax.swing.JFrame {
             btn_ckout.setEnabled(true);
             btn_cancel.setEnabled(false);
             disableFormFields();
-            //updateBookingInCSV(dados);
+            updateBookingInCSV(dados);
             JOptionPane.showMessageDialog(this, "Check-in realizado com sucesso.");
         });
 
@@ -93,6 +92,7 @@ public class newBooking extends javax.swing.JFrame {
         });
     }
 
+    // desabilita a edição do formulário antes do checkin
     private void disableFormFields() {
         txt_nome.setEditable(false);
         txt_sobrenome.setEditable(false);
@@ -102,6 +102,7 @@ public class newBooking extends javax.swing.JFrame {
         txt_criancas.setEditable(false);
     }
 
+    // atualiza o CSV
     public void updateBookingInCSV(Booking updatedBooking) {
     List<Booking> bookings = new ArrayList<>();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -123,10 +124,10 @@ public class newBooking extends javax.swing.JFrame {
                 Integer.parseInt(data[8])
             );
             if (booking.getId() == updatedBooking.getId()) {
-                // Atualiza com os novos detalhes
+                // Atualiza com os novos detalhes o dado selecionado
                 bookings.add(updatedBooking);
             } else {
-                bookings.add(booking);
+                bookings.add(booking); // preenche os outros dados
             }
         }
     } catch (IOException | ParseException e) {
@@ -373,12 +374,14 @@ public class newBooking extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // vai para página reservas
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         new BookingList().display();
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    // vai para pagina HOME
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         new HomeFrame().display();
@@ -395,7 +398,7 @@ public class newBooking extends javax.swing.JFrame {
             int numAdults = Integer.parseInt(txt_adultos.getText());
             int numChildren = Integer.parseInt(txt_criancas.getText());
 
-            // Suponha que exista uma função para obter todas as reservas e quartos disponíveis
+            // função para obter todas as reservas e quartos disponíveis
             List<Room> availableRooms = bookingSystem.searchAvailableRooms(RoomList.lerQuartosCSV("dados/rooms.csv"), BookingList.lerBookingCSV("dados/booking.csv"), numAdults, numChildren, checkInDate, checkOutDate, CANCELED_STATUS_ID);
             if (!availableRooms.isEmpty()) {
                 quartoDisponivel = availableRooms.get(0); // Assume que a lista já está ordenada pelo preço
@@ -408,7 +411,7 @@ public class newBooking extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_availableRoomActionPerformed
 
-
+    // botao para confirmar as alterações e colocar no CSV
     private void btn_confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmActionPerformed
         // TODO add your handling code here:
         try {
